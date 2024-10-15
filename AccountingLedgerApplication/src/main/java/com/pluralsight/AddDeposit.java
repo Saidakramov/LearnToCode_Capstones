@@ -20,7 +20,7 @@ public class AddDeposit {
     }
 
     public String toCsvLine() {
-        return date + "|" + time + "|" + description + "|" + vendor + "|$" + amount + "\n";
+        return date + "|" + time + "|" + description + "|" + vendor + "|" + amount + "\n";
     }
 
     public LocalDate getDate() {
