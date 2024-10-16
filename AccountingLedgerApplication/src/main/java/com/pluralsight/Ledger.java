@@ -1,7 +1,6 @@
 package com.pluralsight;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -12,7 +11,6 @@ import java.util.List;
 import static com.pluralsight.HomeScreen.homePage;
 import static com.pluralsight.HomeScreen.input;
 import static com.pluralsight.Reports.loopReports;
-import static com.pluralsight.Reports.reports;
 
 public class Ledger {
     public static void main(String[] args) throws IOException {
@@ -21,7 +19,9 @@ public class Ledger {
     }
 
     public static void loopLedger() throws IOException {
+        //creating String variable outside the loop
         String ledgerPage;
+        //creating do while loop to make sure application is running until the user wants to quit
         do {
             ledger();
             do {
@@ -62,14 +62,15 @@ public class Ledger {
                 ledger.add(a);
                 index++;
             }
+            // handling different user inputs
             switch (answer) {
-                case ("a"):
+                case ("a")://all transactions
                     System.out.println("All transactions: \n");
                     for (AddDeposit a : ledger) {
                         System.out.println(a.toCsvLine());
                     }
                     break;
-                case ("d"):
+                case ("d"):// all deposits
                     System.out.println("Deposits: \n");
                     for (AddDeposit a : ledger) {
                         if (a.getAmount() > 0) {
@@ -77,7 +78,7 @@ public class Ledger {
                         }
                     }
                     break;
-                case ("p"):
+                case ("p"):// all payments
                     System.out.println("Payments: \n");
                     for (AddDeposit a : ledger) {
                         if (a.getAmount() < 0) {
@@ -85,21 +86,21 @@ public class Ledger {
                         }
                     }
                     break;
-                case ("r"):
+                case ("r"):// takes to reports page
                     System.out.println("Taking you to Reports page...");
                     loopReports();
                     break;
-                case("h"):
+                case("h"):// take back to home page
                     System.out.println("Going back to home page...");
                     homePage();
                     break;
-                default:
+                default:// prompts user to input correct input
                     System.out.println("Invalid option selected. Please enter a, d, p, r, or h. ");
                     break;
             }
         } catch (IOException e) {
             e.getMessage();
         }
-        reader.close();
+        reader.close();//ensure reader is closed
     }
 }

@@ -1,7 +1,6 @@
 package com.pluralsight;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -13,12 +12,14 @@ import static com.pluralsight.HomeScreen.input;
 import static com.pluralsight.Ledger.ledger;
 
 public class Reports {
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws IOException {
     loopReports();
     }
 
-    public static void loopReports() throws FileNotFoundException {
+    public static void loopReports() throws IOException {
+        //creating String outside the loops
         String reportsPage;
+        //creating do while loop to make application running until otherwise user chooses to be so
         do {
             reports();
             do {
@@ -32,7 +33,8 @@ public class Reports {
 
     }
 
-    public static void reports() throws FileNotFoundException {
+    public static void reports() throws IOException {
+        //creating a String variable to hold a user input
         String answer = input("You are on the Reports page: " +
                 "\nPlease chose the options below: " +
                 "\n(1) Month To Date. " +
@@ -41,11 +43,12 @@ public class Reports {
                 "\n(4) Previous Year. " +
                 "\n(5) Search by Vendor. " +
                 "\n(0) Go back to Ledger page. ");
-
+        //creating buff reader
         BufferedReader reader = new BufferedReader(new FileReader("transactions.csv"));
+        //creating a list
         List<AddDeposit> reports = new ArrayList<>();
         try {
-            reader.readLine();
+            reader.readLine();//skip the header line
             String line;
             int index = 0;
             while ((line = reader.readLine()) != null) {
@@ -58,8 +61,9 @@ public class Reports {
                 reports.add(a);
                 index++;
             }
+            //handling different options
             switch (answer) {
-                case ("1"):
+                case ("1")://if user chose 1 generate MTD report
                     System.out.println("Month To Date Report: ");
                     //getting today's date
                     LocalDate today = LocalDate.now();
@@ -72,7 +76,7 @@ public class Reports {
                         }
                     }
                     break;
-                case ("2"):
+                case ("2"):// if user chose 2 generate PM report
                     System.out.println("Previous Month Report: ");
                     //getting first day of the previous month
                     LocalDate firstDayMonth = LocalDate.now().minusMonths(1).withDayOfMonth(1);
@@ -84,7 +88,7 @@ public class Reports {
                         }
                     }
                     break;
-                case ("3"):
+                case ("3"):// if user chose 3 generate YTD report
                     System.out.println("Year To Date Report: ");
                     //getting the first day of the Year
                     LocalDate firstDayYear = LocalDate.now().withDayOfYear(1);
@@ -95,7 +99,7 @@ public class Reports {
                         }
                     }
                     break;
-                case ("4"):
+                case ("4"):// if user chose 4 generate PY report
                     System.out.println("Previous Year Report: ");
                     //getting first day of last year
                     LocalDate firstDayLastYear = LocalDate.now().minusYears(1).withDayOfYear(1);
@@ -107,7 +111,7 @@ public class Reports {
                         }
                     }
                     break;
-                case ("5"):
+                case ("5")://if user chose 5 ask for vendor name and generate report
                     //creating a string to hold a user input
                     String vendorSearch = input("Please enter the vendor name to search for: ");
                     System.out.println("Search By Vendor: " + vendorSearch);
@@ -119,11 +123,12 @@ public class Reports {
                             found = true;
                         }
                     }
+                    //if vendor name doesn't match data print below statement
                     if (!found) {
                         System.out.println("No transactions found for: " + vendorSearch);
                     }
                     break;
-                case ("0"):
+                case ("0"):// if user chose 0 take them back to ledger page
                     System.out.println("Taking you back to Ledger page ... ");
                     ledger();
                 default:
@@ -133,5 +138,6 @@ public class Reports {
         }catch (IOException e) {
             e.getMessage();
         }
+        reader.close();//ensure reader is closed
     }
 }

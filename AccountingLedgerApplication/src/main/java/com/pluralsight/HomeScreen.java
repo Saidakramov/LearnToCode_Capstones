@@ -9,7 +9,6 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static com.pluralsight.Ledger.ledger;
 import static com.pluralsight.Ledger.loopLedger;
 
 public class HomeScreen {
@@ -119,7 +118,7 @@ public class HomeScreen {
             if (file.length() == 0) {
                 writer.write("date|time|description|vendor|amount\n");
             }
-            //write deposit info to the file
+            //write payment info to the file
             for (AddDeposit a : addDeposits) {
                 writer.write(a.toCsvLine());
             }
