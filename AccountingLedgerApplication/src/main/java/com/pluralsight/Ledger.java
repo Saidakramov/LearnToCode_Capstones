@@ -9,7 +9,9 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.pluralsight.HomeScreen.homePage;
 import static com.pluralsight.HomeScreen.input;
+import static com.pluralsight.Reports.reports;
 
 public class Ledger {
     public static void main(String[] args) throws IOException {
@@ -66,11 +68,13 @@ public class Ledger {
                     }
                     break;
                 case ("r"):
-                    System.out.println("Reports: ");
+                    System.out.println("Taking you to Reports page...");
+                    reports();
 
                     break;
                 case("h"):
                     System.out.println("Going back to home page...");
+                    homePage();
                     break;
                 default:
                     System.out.println("Invalid option selected. Please enter a, d, p, r, or h. ");

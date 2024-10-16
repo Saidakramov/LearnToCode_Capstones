@@ -9,15 +9,29 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
+import static com.pluralsight.Ledger.ledger;
+
 public class HomeScreen {
     public static Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) throws IOException {
-        //userOptions();
-        //addDeposit();
-        //System.out.println(randomDate());
-        //System.out.println(randomTime());
-        makePayment();
+       homePage();
+    }
 
+    public static void homePage() throws IOException {
+        String answer = userOptions();
+
+        if (answer.equalsIgnoreCase("d")){
+            addDeposit();
+        } else if (answer.equalsIgnoreCase("p")) {
+            makePayment();
+        } else if (answer.equalsIgnoreCase("l")) {
+            ledger();
+        } else if (answer.equalsIgnoreCase("x")) {
+            System.out.println("Exiting the program...");
+            System.exit(0);
+        }   else {
+            System.out.println("Invalid input please enter d,p,l, or x. ");
+        }
     }
 
     public static String input(String message){
@@ -39,12 +53,6 @@ public class HomeScreen {
     }
 
     public static void addDeposit() throws IOException {
-        //saving users input to an answer variable
-        String answer = userOptions();
-
-        if (!answer.equalsIgnoreCase("D")){
-            return;
-        }
         //creating a list
         List<AddDeposit> addDeposits = new ArrayList<>();
         //creating a variables using user input
@@ -81,12 +89,6 @@ public class HomeScreen {
     }
 
     public static void makePayment() throws IOException {
-        //saving users input to an answer variable
-        String answer = userOptions();
-
-        if (!answer.equalsIgnoreCase("P")){
-            return;
-        }
         //creating a list
         List<AddDeposit> addDeposits = new ArrayList<>();
         //creating a variables using user input

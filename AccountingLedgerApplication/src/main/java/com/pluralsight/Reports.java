@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.pluralsight.HomeScreen.input;
+import static com.pluralsight.Ledger.ledger;
 
 public class Reports {
     public static void main(String[] args) throws FileNotFoundException {
@@ -109,6 +110,7 @@ public class Reports {
                     break;
                 case ("0"):
                     System.out.println("Taking you back to Ledger page ... ");
+                    ledger();
                 default:
                     System.out.println("Invalid option selected. Please press 1,2,3,4,5, or 0. ");
 
