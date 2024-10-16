@@ -23,7 +23,8 @@ public class Ledger {
                 "\n(A) All - Display all entries. " +
                 "\n(D) Deposits - Display only the entries that are deposits into the account. " +
                 "\n(P) Payments - Display only the negative entries (or payments). " +
-                "\n(R) Reports - Display reports screen. ").toLowerCase();
+                "\n(R) Reports - Display reports screen. " +
+                "\n(H) Go back to home page. ").toLowerCase();
 
         BufferedReader reader = new BufferedReader(new FileReader("transactions.csv"));
         List<AddDeposit> ledger = new ArrayList<>();
@@ -68,8 +69,11 @@ public class Ledger {
                     System.out.println("Reports: ");
 
                     break;
+                case("h"):
+                    System.out.println("Going back to home page...");
+                    break;
                 default:
-                    System.out.println("Invalid option selected. Please enter a, d, p, or r. ");
+                    System.out.println("Invalid option selected. Please enter a, d, p, r, or h. ");
                     break;
             }
         } catch (IOException e) {
