@@ -10,30 +10,36 @@ import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static com.pluralsight.Ledger.ledger;
+import static com.pluralsight.Ledger.loopLedger;
 
 public class HomeScreen {
+    //creating a public scanner so it can be accessed throughout the applications
     public static Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) throws IOException {
        homePage();
     }
 
     public static void homePage() throws IOException {
-        String answer = userOptions();
-
-        if (answer.equalsIgnoreCase("d")){
-            addDeposit();
-        } else if (answer.equalsIgnoreCase("p")) {
-            makePayment();
-        } else if (answer.equalsIgnoreCase("l")) {
-            ledger();
-        } else if (answer.equalsIgnoreCase("x")) {
-            System.out.println("Exiting the program...");
-            System.exit(0);
-        }   else {
-            System.out.println("Invalid input please enter d,p,l, or x. ");
+        //create a while loop to return a user to main page
+        while (true){
+            // creating a variable answer to save user input
+            String answer = userOptions();
+            // creating if else statements to check for user input options and provide actions accordingly
+            if (answer.equalsIgnoreCase("d")){
+                addDeposit();
+            } else if (answer.equalsIgnoreCase("p")) {
+                makePayment();
+            } else if (answer.equalsIgnoreCase("l")) {
+                loopLedger();
+            } else if (answer.equalsIgnoreCase("x")) {
+                System.out.println("Exiting the program...");
+                System.exit(0);
+            }   else {
+                System.out.println("Invalid input please enter d,p,l, or x. ");
+            }
         }
     }
-
+    // creating input method that takes String as argument and scans the user input using nextLine().
     public static String input(String message){
         System.out.println(message);
         return scanner.nextLine();
@@ -43,6 +49,7 @@ public class HomeScreen {
 
 
     public static String userOptions(){
+        //providing user with options and asking for their input
         String options = input("Please select the options below :" +
                 "\n(D) Add Deposit " +
                 "\n(P) Make Payment (Debit) " +
@@ -55,11 +62,11 @@ public class HomeScreen {
     public static void addDeposit() throws IOException {
         //creating a list
         List<AddDeposit> addDeposits = new ArrayList<>();
-        //creating a variables using user input
+        //assigning randomDate() to date variable
         LocalDate date = randomDate();
-        //LocalDate date = LocalDate.parse(input("Please enter the date in YYYY-MM-DD format. "));
+        //assigning randomTime() to time variable
         LocalTime time = randomTime();
-        //LocalTime time = LocalTime.parse(input("Please enter the time in HH:mm:ss format "));
+        //saving user inputs to variables
         String description = input("Please enter the description of the deposit. ");
         String vendor = input("Please enter the vendor name. ");
         double amount = Double.parseDouble(input("Please enter the amount deposited. "));
@@ -80,7 +87,7 @@ public class HomeScreen {
                 for (AddDeposit a : addDeposits) {
                     writer.write(a.toCsvLine());
                 }
-
+                // closing a writer
                 writer.close();
             } catch (Exception e) {
                 System.out.println(e.getMessage());
@@ -91,11 +98,11 @@ public class HomeScreen {
     public static void makePayment() throws IOException {
         //creating a list
         List<AddDeposit> addDeposits = new ArrayList<>();
-        //creating a variables using user input
+        //assigning randomDate() to date variable
         LocalDate date = randomDate();
-        //LocalDate date = LocalDate.parse(input("Please enter the date in YYYY-MM-DD format. "));
+        //assigning randomTime() to time variable
         LocalTime time = randomTime();
-        //LocalTime time = LocalTime.parse(input("Please enter the time in HH:mm:ss format "));
+        //saving user inputs to variables
         String description = input("Please enter the description of the item. ");
         String vendor = input("Please enter the vendor name. ");
         double amount = Double.parseDouble(input("Please enter the amount paid. "));
@@ -116,7 +123,7 @@ public class HomeScreen {
             for (AddDeposit a : addDeposits) {
                 writer.write(a.toCsvLine());
             }
-
+            //closing a writer
             writer.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -125,15 +132,16 @@ public class HomeScreen {
     }
 
 
-
+    //creating a randomDate() method to generate random dates
     public static LocalDate randomDate(){
+        //creating startDate to include a previous year
         long startDate = LocalDate.now().minusYears(1).toEpochDay();
         long endDate = LocalDate.now().toEpochDay();
         long randomDay = ThreadLocalRandom.current().nextLong(startDate, endDate);
         LocalDate randomDate = LocalDate.ofEpochDay(randomDay);
         return  randomDate;
     }
-
+    //creating randomTime() method to generate random times
     public  static LocalTime randomTime(){
         Random random = new Random();
         int hour = random.nextInt(12);

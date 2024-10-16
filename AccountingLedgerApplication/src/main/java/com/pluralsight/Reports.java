@@ -14,7 +14,22 @@ import static com.pluralsight.Ledger.ledger;
 
 public class Reports {
     public static void main(String[] args) throws FileNotFoundException {
-    reports();
+    loopReports();
+    }
+
+    public static void loopReports() throws FileNotFoundException {
+        String reportsPage;
+        do {
+            reports();
+            do {
+                reportsPage = input("Would you like to go back to the reports page? Please enter y/n");
+                if (!reportsPage.equals("y") && !reportsPage.equals("n")) {
+                    System.out.println("Invalid input. Please input 'y' or 'n' .");
+                }
+            } while (!reportsPage.equals("y") && !reportsPage.equals("n")) ;
+
+        } while (reportsPage.equals("y"));
+
     }
 
     public static void reports() throws FileNotFoundException {

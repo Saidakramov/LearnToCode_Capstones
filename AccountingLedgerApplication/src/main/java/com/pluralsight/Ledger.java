@@ -11,26 +11,44 @@ import java.util.List;
 
 import static com.pluralsight.HomeScreen.homePage;
 import static com.pluralsight.HomeScreen.input;
+import static com.pluralsight.Reports.loopReports;
 import static com.pluralsight.Reports.reports;
 
 public class Ledger {
     public static void main(String[] args) throws IOException {
-        ledger();
+        loopLedger();
 
     }
 
+    public static void loopLedger() throws IOException {
+        String ledgerPage;
+        do {
+            ledger();
+            do {
+                ledgerPage = input("Would you like to go back to ledger page? Please enter y/n").toLowerCase();
+                 if (!ledgerPage.equals("y") && !ledgerPage.equals("n")) {
+                     System.out.println("Invalid input. Please input 'y' or 'n' .");
+                 }
+            } while (!ledgerPage.equals("y") && !ledgerPage.equals("n")) ;
+
+        } while (ledgerPage.equals("y"));
+    }
+    // creating a ledger method to provide user with options and save their input and provide actions accordingly
     public static void ledger() throws IOException {
-        String answer = input("You are in the ledger screen" +
+        //saving user input for options to a variable
+        String answer = input("You are in the ledger page" +
                 "\nPlease pick the options below:" +
                 "\n(A) All - Display all entries. " +
                 "\n(D) Deposits - Display only the entries that are deposits into the account. " +
                 "\n(P) Payments - Display only the negative entries (or payments). " +
                 "\n(R) Reports - Display reports screen. " +
                 "\n(H) Go back to home page. ").toLowerCase();
-
+        //creating a bufferedReader
         BufferedReader reader = new BufferedReader(new FileReader("transactions.csv"));
+        //creating a list ledger
         List<AddDeposit> ledger = new ArrayList<>();
         try {
+            //reading first line header
             reader.readLine();
             String line;
             int index = 0;
@@ -46,13 +64,13 @@ public class Ledger {
             }
             switch (answer) {
                 case ("a"):
-                    System.out.println("All transactions: ");
+                    System.out.println("All transactions: \n");
                     for (AddDeposit a : ledger) {
                         System.out.println(a.toCsvLine());
                     }
                     break;
                 case ("d"):
-                    System.out.println("Deposits: ");
+                    System.out.println("Deposits: \n");
                     for (AddDeposit a : ledger) {
                         if (a.getAmount() > 0) {
                             System.out.println(a.toCsvLine());
@@ -60,7 +78,7 @@ public class Ledger {
                     }
                     break;
                 case ("p"):
-                    System.out.println("Payments: ");
+                    System.out.println("Payments: \n");
                     for (AddDeposit a : ledger) {
                         if (a.getAmount() < 0) {
                             System.out.println(a.toCsvLine());
@@ -69,8 +87,7 @@ public class Ledger {
                     break;
                 case ("r"):
                     System.out.println("Taking you to Reports page...");
-                    reports();
-
+                    loopReports();
                     break;
                 case("h"):
                     System.out.println("Going back to home page...");
