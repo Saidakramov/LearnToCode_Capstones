@@ -3,6 +3,7 @@ package com.pluralsight;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -36,13 +37,20 @@ public class Ledger {
     // creating a ledger method to provide user with options and save their input and provide actions accordingly
     public static void ledger() throws IOException {
         //saving user input for options to a variable
-        String answer = input("You are in the ledger page" +
-                "\nPlease pick the options below:" +
-                "\n(A) All - Display all entries. " +
-                "\n(D) Deposits - Display only the entries that are deposits into the account. " +
-                "\n(P) Payments - Display only the negative entries (or payments). " +
-                "\n(R) Reports - Display reports screen. " +
-                "\n(H) Go back to home page. ").toLowerCase();
+        String answer = input("""
+                You are in the ledger page\
+                
+                Please pick the options below:\
+                
+                (A) All - Display all entries. \
+                
+                (D) Deposits - Display only the entries that are deposits into the account. \
+                
+                (P) Payments - Display only the negative entries (or payments). \
+                
+                (R) Reports - Display reports screen. \
+                
+                (H) Go back to home page.\s""").toLowerCase();
         //creating a bufferedReader
         BufferedReader reader = new BufferedReader(new FileReader("transactions.csv"));
         //creating a list ledger
@@ -51,7 +59,6 @@ public class Ledger {
             //reading first line header
             reader.readLine();
             String line;
-            int index = 0;
             while ((line = reader.readLine()) != null) {// checking if a reader returning a non-null value
                 String[] ledgerData = line.split("\\|");// creating an arrayList to save each line that is split into columns
                 //creating object with parsed data
@@ -62,7 +69,6 @@ public class Ledger {
                         Double.parseDouble(ledgerData[4]));
                 //adding object to reports list
                 ledger.add(a);
-                index++;
             }
             // handling different user inputs
             switch (answer) {
@@ -101,7 +107,7 @@ public class Ledger {
                     break;
             }
         } catch (IOException e) {
-            e.getMessage();
+            System.out.println("Error reading file " + e.getMessage());
         }
         reader.close();//ensure reader is closed
     }

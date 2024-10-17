@@ -35,15 +35,24 @@ public class Reports {
 
     public static void reports() throws IOException {
         //creating a String variable to hold a user input
-        String answer = input("You are on the Reports page: " +
-                "\nPlease chose the options below: " +
-                "\n(1) Month To Date. " +
-                "\n(2) Previous Month. " +
-                "\n(3) Year To Date. " +
-                "\n(4) Previous Year. " +
-                "\n(5) Search by Vendor. " +
-                "\n(6) Custom Search. " +
-                "\n(0) Go back to Ledger page. ");
+        String answer = input("""
+                You are on the Reports page: \
+                
+                Please chose the options below: \
+                
+                (1) Month To Date. \
+                
+                (2) Previous Month. \
+                
+                (3) Year To Date. \
+                
+                (4) Previous Year. \
+                
+                (5) Search by Vendor. \
+                
+                (6) Custom Search. \
+                
+                (0) Go back to Ledger page.\s""");
         //creating buff reader
         BufferedReader reader = new BufferedReader(new FileReader("transactions.csv"));
         //creating a list
@@ -51,7 +60,6 @@ public class Reports {
         try {
             reader.readLine();//skip the header line
             String line;
-            int index = 0;
             while ((line = reader.readLine()) != null) { // checking if a reader returning a non-null value
                 String[] ledgerData = line.split("\\|");// creating an arrayList to save each line that is split into columns
                 //creating object with parsed data
@@ -62,7 +70,6 @@ public class Reports {
                         Double.parseDouble(ledgerData[4]));
                 //adding object to reports list
                 reports.add(a);
-                index++;
             }
             //handling different options
             switch (answer) {
@@ -136,8 +143,8 @@ public class Reports {
                     //creating variable to save user input and allowing null input
                     LocalDate enterStartDate = null;
                     LocalDate enterEndDate = null;
-                    String enterDescription = "";
-                    String enterVendor = "";
+                    String enterDescription;
+                    String enterVendor;
                     Double enterAmount = null;
                     //get user input and parse only if non-empty
                     String startInput = input("Please enter the start date for a search in yyyy-mm-dd format or leave blank to skip: ").trim();
@@ -161,24 +168,24 @@ public class Reports {
                     boolean anyMatches = false; // track if any matches are found
                     //loop through records and apply filters
                     for (AddDeposit a : reports){
-                        boolean mathces = true;//start with true and fail if conditions does not match
+                        boolean matches = true;//start with true and fail if conditions does not match
 
                         if (enterStartDate != null && a.getDate().isBefore(enterStartDate)){
-                            mathces = false;
+                            matches = false;
                         }
                         if (enterEndDate != null && a.getDate().isAfter(enterEndDate)){
-                            mathces = false;
+                            matches = false;
                         }
                         if (!enterDescription.isEmpty() && !a.getDescription().contains(enterDescription)){
-                            mathces = false;
+                            matches = false;
                         }
                         if (!enterVendor.isEmpty() && !a.getVendor().contains(enterVendor)){
-                            mathces = false;
+                            matches = false;
                         }
                         if ((enterAmount != null) && Double.compare(a.getAmount(),enterAmount) != 0){
-                            mathces =false;
+                            matches =false;
                         }
-                        if (mathces){
+                        if (matches){
                             System.out.println(a.toCsvLine());
                             anyMatches = true; //at least one match was found
                         }
@@ -197,7 +204,7 @@ public class Reports {
 
             }
         }catch (IOException e) {
-            e.getMessage();
+            System.out.println("Error reading file " + e.getMessage());
         }
         reader.close();//ensure reader is closed
     }

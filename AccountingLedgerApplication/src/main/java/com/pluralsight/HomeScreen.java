@@ -49,22 +49,42 @@ public class HomeScreen {
 
     public static String userOptions(){
         //providing user with options and asking for their input
-        String options = input("Please select the options below :" +
-                "\n(D) Add Deposit " +
-                "\n(P) Make Payment (Debit) " +
-                "\n(L) Ledger " +
-                "\n(X) Exit ").toLowerCase();
 
-        return options;
+        return input("""
+                Please select the options below :\
+                
+                (D) Add Deposit \
+                
+                (P) Make Payment (Debit) \
+                
+                (L) Ledger \
+                
+                (X) Exit\s""").toLowerCase();
+    }
+    public static void writer(AddDeposit transaction){
+        List<AddDeposit> addDeposits = new ArrayList<>();
+        try{
+            //create a BufferedWriter
+            BufferedWriter writer = new BufferedWriter(new FileWriter("transactions.csv", true));
+            //if file is empty create a header
+            File file = new File("transactions.csv");
+            if (file.length() == 0) {
+                writer.write("date|time|description|vendor|amount\n");
+            }
+            //write deposit info to the file
+            writer.write(transaction.toCsvLine());
+            // closing a writer
+            writer.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
-    public static void addDeposit() throws IOException {
+    public static void addDeposit() {
         //creating a list
         List<AddDeposit> addDeposits = new ArrayList<>();
         //assigning randomDate() to date variable
         LocalDate date = randomDate();
-        //asking user input for manual date input to have a data for current month
-        //LocalDate date = LocalDate.parse(input("Please enter the date in yyyy-mm-dd format. "));
         //assigning randomTime() to time variable
         LocalTime time = randomTime();
         //saving user inputs to variables
@@ -75,34 +95,18 @@ public class HomeScreen {
         AddDeposit deposit = new AddDeposit(date, time, description, vendor, amount);
         //adding object to a list
         addDeposits.add(deposit);
+        //writing to csv
+        writer(deposit);
 
-            try{
-                //create a BufferedWriter
-                BufferedWriter writer = new BufferedWriter(new FileWriter("transactions.csv", true));
-                //if file is empty create a header
-                File file = new File("transactions.csv");
-                if (file.length() == 0) {
-                    writer.write("date|time|description|vendor|amount\n");
-                }
-                //write deposit info to the file
-                for (AddDeposit a : addDeposits) {
-                    writer.write(a.toCsvLine());
-                }
-                // closing a writer
-                writer.close();
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-        }
+
 
     }
 
-    public static void makePayment() throws IOException {
+    public static void makePayment() {
         //creating a list
         List<AddDeposit> addDeposits = new ArrayList<>();
         //assigning randomDate() to date variable
         LocalDate date = randomDate();
-        //asking user input for manual date input to have a data for current month
-        //LocalDate date = LocalDate.parse(input("Please enter the date in yyyy-mm-dd format. "));
         //assigning randomTime() to time variable
         LocalTime time = randomTime();
         //saving user inputs to variables
@@ -110,27 +114,10 @@ public class HomeScreen {
         String vendor = input("Please enter the vendor name. ");
         double amount = Double.parseDouble(input("Please enter the amount paid. "));
         //constructing AddDeposit object
-        AddDeposit deposit = new AddDeposit(date, time, description, vendor, amount * -1);
+        AddDeposit payment = new AddDeposit(date, time, description, vendor, amount * -1);
         //adding object to a list
-        addDeposits.add(deposit);
-
-        try{
-            //create a BufferedWriter
-            BufferedWriter writer = new BufferedWriter(new FileWriter("transactions.csv", true));
-            //if file is empty create a header
-            File file = new File("transactions.csv");
-            if (file.length() == 0) {
-                writer.write("date|time|description|vendor|amount\n");
-            }
-            //write payment info to the file
-            for (AddDeposit a : addDeposits) {
-                writer.write(a.toCsvLine());
-            }
-            //closing a writer
-            writer.close();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        addDeposits.add(payment);
+        writer(payment);
 
     }
 
@@ -141,8 +128,7 @@ public class HomeScreen {
         long startDate = LocalDate.now().minusYears(1).toEpochDay();
         long endDate = LocalDate.now().toEpochDay();
         long randomDay = ThreadLocalRandom.current().nextLong(startDate, endDate);
-        LocalDate randomDate = LocalDate.ofEpochDay(randomDay);
-        return  randomDate;
+        return LocalDate.ofEpochDay(randomDay);
     }
     //creating randomTime() method to generate random times
     public  static LocalTime randomTime(){
