@@ -52,25 +52,27 @@ public class Ledger {
             reader.readLine();
             String line;
             int index = 0;
-            while ((line = reader.readLine()) != null) {
-                String[] ledgerData = line.split("\\|");
+            while ((line = reader.readLine()) != null) {// checking if a reader returning a non-null value
+                String[] ledgerData = line.split("\\|");// creating an arrayList to save each line that is split into columns
+                //creating object with parsed data
                 AddDeposit a = new AddDeposit(LocalDate.parse(ledgerData[0]),
                         LocalTime.parse(ledgerData[1]),
                         ledgerData[2],
                         ledgerData[3],
                         Double.parseDouble(ledgerData[4]));
+                //adding object to reports list
                 ledger.add(a);
                 index++;
             }
             // handling different user inputs
             switch (answer) {
-                case ("a")://all transactions
+                case "a"://all transactions
                     System.out.println("All transactions: \n");
                     for (AddDeposit a : ledger) {
                         System.out.println(a.toCsvLine());
                     }
                     break;
-                case ("d"):// all deposits
+                case "d":// all deposits
                     System.out.println("Deposits: \n");
                     for (AddDeposit a : ledger) {
                         if (a.getAmount() > 0) {
@@ -78,7 +80,7 @@ public class Ledger {
                         }
                     }
                     break;
-                case ("p"):// all payments
+                case "p":// all payments
                     System.out.println("Payments: \n");
                     for (AddDeposit a : ledger) {
                         if (a.getAmount() < 0) {
@@ -86,11 +88,11 @@ public class Ledger {
                         }
                     }
                     break;
-                case ("r"):// takes to reports page
+                case "r":// takes to reports page
                     System.out.println("Taking you to Reports page...");
                     loopReports();
                     break;
-                case("h"):// take back to home page
+                case"h":// take back to home page
                     System.out.println("Going back to home page...");
                     homePage();
                     break;
