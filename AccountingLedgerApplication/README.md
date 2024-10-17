@@ -51,9 +51,11 @@ If the user chooses the Ledger option, the program will display a new screen and
 <br> <img width="511" alt="Screenshot 2024-10-17 at 2 02 22 PM" src="https://github.com/user-attachments/assets/e046a01d-acde-45e1-85d8-010c422dc419"> <img width="532" alt="Screenshot 2024-10-17 at 2 02 58 PM" src="https://github.com/user-attachments/assets/fc4f474d-9243-4972-b42c-e45f36de1ac5">
 
 (6) Custom Search. This will prompt users to enter a start date, end date, description, vendor name, and amount information. The user can skip any of the questions by leaving the fields blank. The program then generates a report based on the search criteria, and if there isn't a match, it will display a message stating that no matches were found.
-<br> 
+<br> <img width="736" alt="Screenshot 2024-10-17 at 2 22 15 PM" src="https://github.com/user-attachments/assets/ea11b788-10c5-4bd2-9fca-3761c91d4d0e"> <img width="683" alt="Screenshot 2024-10-17 at 2 22 42 PM" src="https://github.com/user-attachments/assets/7edb040f-c045-4f35-9ec6-ee2faa0f034e">
+
+
 
 (0) Go back to the Ledger page. This will take a user back to the Ledger page.
 In the Ledger page ((H) Go back to the home page), the user will be returned to the Home Screen page.
 In the Home Screen ((X) Exit) - will exit the program. 
-<br> 
+<br> <img width="647" alt="Screenshot 2024-10-17 at 2 34 08 PM" src="https://github.com/user-attachments/assets/2856fe5e-d812-4ac6-81bf-40bb97e1a04b">
