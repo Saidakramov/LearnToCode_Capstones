@@ -63,6 +63,8 @@ public class HomeScreen {
         List<AddDeposit> addDeposits = new ArrayList<>();
         //assigning randomDate() to date variable
         LocalDate date = randomDate();
+        //asking user input for manual date input to have a data for current month
+        //LocalDate date = LocalDate.parse(input("Please enter the date in yyyy-mm-dd format. "));
         //assigning randomTime() to time variable
         LocalTime time = randomTime();
         //saving user inputs to variables
@@ -99,6 +101,8 @@ public class HomeScreen {
         List<AddDeposit> addDeposits = new ArrayList<>();
         //assigning randomDate() to date variable
         LocalDate date = randomDate();
+        //asking user input for manual date input to have a data for current month
+        //LocalDate date = LocalDate.parse(input("Please enter the date in yyyy-mm-dd format. "));
         //assigning randomTime() to time variable
         LocalTime time = randomTime();
         //saving user inputs to variables
