@@ -50,5 +50,10 @@ If the user chooses the Ledger option, the program will display a new screen and
 (5) Search by Vendor. This will prompt a user to enter the vendor's name they are looking for and provide a report based on that vendor. If the vendor doesn't exist, the program will print that there are no reports for the provided vendor.
 <br> <img width="511" alt="Screenshot 2024-10-17 at 2 02 22 PM" src="https://github.com/user-attachments/assets/e046a01d-acde-45e1-85d8-010c422dc419"> <img width="532" alt="Screenshot 2024-10-17 at 2 02 58 PM" src="https://github.com/user-attachments/assets/fc4f474d-9243-4972-b42c-e45f36de1ac5">
 
+(6) Custom Search. This will prompt users to enter a start date, end date, description, vendor name, and amount information. The user can skip any of the questions by leaving the fields blank. The program then generates a report based on the search criteria, and if there isn't a match, it will display a message stating that no matches were found.
+<br> 
 
-
+(0) Go back to the Ledger page. This will take a user back to the Ledger page.
+In the Ledger page ((H) Go back to the home page), the user will be returned to the Home Screen page.
+In the Home Screen ((X) Exit) - will exit the program. 
+<br> 
