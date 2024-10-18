@@ -62,7 +62,7 @@ public class HomeScreen {
                 (X) Exit\s""").toLowerCase();
     }
     public static void writer(AddDeposit transaction){
-        List<AddDeposit> addDeposits = new ArrayList<>();
+        //List<AddDeposit> addDeposits = new ArrayList<>();
         try{
             //create a BufferedWriter
             BufferedWriter writer = new BufferedWriter(new FileWriter("transactions.csv", true));
